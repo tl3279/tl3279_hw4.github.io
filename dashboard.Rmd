@@ -73,7 +73,7 @@ ny_noaa |>
   )
 ```
 
-### Barplot
+### Bar Plot
 
 ```{r}
 ny_noaa |>
