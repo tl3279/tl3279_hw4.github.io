@@ -1,0 +1,17 @@
+---
+title: "My website"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# This is Tianqi Li's website
+Hi, I am a second year MPH student majored in biostatistics with a certificate in
+comparative effectiveness outcomes research (CEOR).I am passionate about using 
+statistical methods to improve healthcare outcomes and inform decision-making. 
+My work focuses on biostatistics applications in public health.
+
+If you'd like to learn more about me, visit [this page](resume.html) or click
+on the "Resume" button on the upper right corner of the page. You can 
+also find quick links to my email and GitHub profile there.
