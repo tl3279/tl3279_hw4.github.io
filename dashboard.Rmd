@@ -1,0 +1,90 @@
+---
+title: "Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+```
+
+```{r}
+data("ny_noaa")
+ny_noaa = 
+  ny_noaa |>
+  janitor::clean_names() |>
+  mutate(
+    tmax = as.numeric(tmax),
+    tmin = as.numeric(tmin),
+    year = year(date),
+    prcp = prcp / 10,
+    tmax = tmax / 10, 
+    tmin = tmin / 10  
+  ) |>
+  filter(
+    !is.na(prcp) & !is.na(snow) & !is.na(snwd) & !is.na(tmax) & !is.na(tmin)
+    ) |>
+  filter(year %in% 2000:2010)
+```
+
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+ny_noaa |>
+  group_by(year) |>
+  summarise(avg_tmax = mean(tmax, na.rm = TRUE),
+            avg_tmin = mean(tmin, na.rm = TRUE)) |>
+  plot_ly(x = ~year, y = ~avg_tmax, name = "Avg Max Temp",
+          type = "scatter", mode = "lines+markers")|>
+  add_trace(y = ~avg_tmin, name = "Avg Min Temp", mode = "lines+markers") |>
+  layout(
+    title = "Yearly Average Max and Min Temperatures (2000-2010)",
+    xaxis = list(title = "Month"),
+    yaxis = list(title = "Temperature (°C)"),
+    showlegend = TRUE
+  )
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+ny_noaa |>
+  mutate(month = month(date)) |>
+  group_by(year, month) |>
+  summarise(avg_prcp = mean(prcp, na.rm = TRUE)) |>
+  plot_ly(x = ~month, y = ~year, z = ~avg_prcp, 
+          type = "heatmap", colors = "viridis") |>
+  layout(
+    title = "Monthly Average Percipitation (2000-2010)",
+    xaxis = list(title = "Month"),
+    yaxis = list(title = "Year")
+  )
+```
+
+### Chart C
+
+```{r}
+ny_noaa |>
+  group_by(year) |>
+  summarise(avg_snow_depth = mean(snwd, na.rm = TRUE)) |>
+  plot_ly(x = ~year, y = ~avg_snow_depth, 
+          type = "bar") |>
+  layout(
+    title = "Average Snow Depth by Year",
+    xaxis = list(title = "Year"),
+    yaxis = list(title = "Snow Depth (mm)")
+  )
+```
+
