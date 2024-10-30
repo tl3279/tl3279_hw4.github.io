@@ -36,7 +36,7 @@ ny_noaa =
 Column {data-width=650}
 -----------------------------------------------------------------------
 
-### Chart A
+### Connected Scatter Plot
 
 ```{r}
 ny_noaa |>
@@ -57,7 +57,7 @@ ny_noaa |>
 Column {data-width=350}
 -----------------------------------------------------------------------
 
-### Chart B
+### Heatmap
 
 ```{r}
 ny_noaa |>
@@ -73,7 +73,7 @@ ny_noaa |>
   )
 ```
 
-### Chart C
+### Barplot
 
 ```{r}
 ny_noaa |>
